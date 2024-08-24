@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Lexico</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <h1>Analizador léxico</h1><br>
+    <form method="post">
+        <label for="code">Code</label>
+        <input type="text" name="code" id="code">
+        <br>
+        <input type="submit" value="Analizar">
+    </form>
+    <div class="contenedor">
+        {% if code %}
+            <p>Code: {{code}}</p>
+        {% else %}
+            <p>Code: No se encontró código</p>
+        {% endif %}
+    </div>
+
+    <div class="contenedor_tabla">
+        <table>
+            {% if tokens %}
+                <tr>
+                    <th>caracteres</th>
+                    <th>simbolos</th>
+                </tr>
+                {% for caracter, simbolo in tokens %}
+                <tr>
+                    <td>{{ caracter}}</td>
+                    <td>{{ simbolo}}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+            <tr><td colspan="2">No se encontro tokens</td></tr>
+            {% endif %}
+        </table>
+    </div>
+    
+</body>
+</html>
