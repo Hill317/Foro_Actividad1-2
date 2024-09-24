@@ -1,0 +1,219 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DIVI
+    DO
+    ELSE
+    FOR
+    IF
+    MULTI
+    RESTA
+    SUMA
+    WHILE
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> declaracion_metodo bloque
+Rule 2     declaracion_metodo -> PUBLIC STATIC VOID MAIN PABIERTO PCERRADO
+Rule 3     bloque -> LABIERTO declaracion LCERRADO
+Rule 4     declaracion -> INT VARIABLE IGUAL numero PUNTOCOMA
+Rule 5     numero -> NUMERO PUNTO NUMERO
+Rule 6     numero -> NUMERO
+
+Terminals, with rules where they appear
+
+DIVI                 : 
+DO                   : 
+ELSE                 : 
+FOR                  : 
+IF                   : 
+IGUAL                : 4
+INT                  : 4
+LABIERTO             : 3
+LCERRADO             : 3
+MAIN                 : 2
+MULTI                : 
+NUMERO               : 5 5 6
+PABIERTO             : 2
+PCERRADO             : 2
+PUBLIC               : 2
+PUNTO                : 5
+PUNTOCOMA            : 4
+RESTA                : 
+STATIC               : 2
+SUMA                 : 
+VARIABLE             : 4
+VOID                 : 2
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+bloque               : 1
+declaracion          : 3
+declaracion_metodo   : 1
+numero               : 4
+programa             : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . declaracion_metodo bloque
+    (2) declaracion_metodo -> . PUBLIC STATIC VOID MAIN PABIERTO PCERRADO
+
+    PUBLIC          shift and go to state 3
+
+    programa                       shift and go to state 1
+    declaracion_metodo             shift and go to state 2
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> declaracion_metodo . bloque
+    (3) bloque -> . LABIERTO declaracion LCERRADO
+
+    LABIERTO        shift and go to state 5
+
+    bloque                         shift and go to state 4
+
+state 3
+
+    (2) declaracion_metodo -> PUBLIC . STATIC VOID MAIN PABIERTO PCERRADO
+
+    STATIC          shift and go to state 6
+
+
+state 4
+
+    (1) programa -> declaracion_metodo bloque .
+
+    $end            reduce using rule 1 (programa -> declaracion_metodo bloque .)
+
+
+state 5
+
+    (3) bloque -> LABIERTO . declaracion LCERRADO
+    (4) declaracion -> . INT VARIABLE IGUAL numero PUNTOCOMA
+
+    INT             shift and go to state 8
+
+    declaracion                    shift and go to state 7
+
+state 6
+
+    (2) declaracion_metodo -> PUBLIC STATIC . VOID MAIN PABIERTO PCERRADO
+
+    VOID            shift and go to state 9
+
+
+state 7
+
+    (3) bloque -> LABIERTO declaracion . LCERRADO
+
+    LCERRADO        shift and go to state 10
+
+
+state 8
+
+    (4) declaracion -> INT . VARIABLE IGUAL numero PUNTOCOMA
+
+    VARIABLE        shift and go to state 11
+
+
+state 9
+
+    (2) declaracion_metodo -> PUBLIC STATIC VOID . MAIN PABIERTO PCERRADO
+
+    MAIN            shift and go to state 12
+
+
+state 10
+
+    (3) bloque -> LABIERTO declaracion LCERRADO .
+
+    $end            reduce using rule 3 (bloque -> LABIERTO declaracion LCERRADO .)
+
+
+state 11
+
+    (4) declaracion -> INT VARIABLE . IGUAL numero PUNTOCOMA
+
+    IGUAL           shift and go to state 13
+
+
+state 12
+
+    (2) declaracion_metodo -> PUBLIC STATIC VOID MAIN . PABIERTO PCERRADO
+
+    PABIERTO        shift and go to state 14
+
+
+state 13
+
+    (4) declaracion -> INT VARIABLE IGUAL . numero PUNTOCOMA
+    (5) numero -> . NUMERO PUNTO NUMERO
+    (6) numero -> . NUMERO
+
+    NUMERO          shift and go to state 16
+
+    numero                         shift and go to state 15
+
+state 14
+
+    (2) declaracion_metodo -> PUBLIC STATIC VOID MAIN PABIERTO . PCERRADO
+
+    PCERRADO        shift and go to state 17
+
+
+state 15
+
+    (4) declaracion -> INT VARIABLE IGUAL numero . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 18
+
+
+state 16
+
+    (5) numero -> NUMERO . PUNTO NUMERO
+    (6) numero -> NUMERO .
+
+    PUNTO           shift and go to state 19
+    PUNTOCOMA       reduce using rule 6 (numero -> NUMERO .)
+
+
+state 17
+
+    (2) declaracion_metodo -> PUBLIC STATIC VOID MAIN PABIERTO PCERRADO .
+
+    LABIERTO        reduce using rule 2 (declaracion_metodo -> PUBLIC STATIC VOID MAIN PABIERTO PCERRADO .)
+
+
+state 18
+
+    (4) declaracion -> INT VARIABLE IGUAL numero PUNTOCOMA .
+
+    LCERRADO        reduce using rule 4 (declaracion -> INT VARIABLE IGUAL numero PUNTOCOMA .)
+
+
+state 19
+
+    (5) numero -> NUMERO PUNTO . NUMERO
+
+    NUMERO          shift and go to state 20
+
+
+state 20
+
+    (5) numero -> NUMERO PUNTO NUMERO .
+
+    PUNTOCOMA       reduce using rule 5 (numero -> NUMERO PUNTO NUMERO .)
+

@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* Estilo del formulario */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.codigo {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.codigo h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.codigo pre {
+    background-color: #eef0f1;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    color: #2d2d2d;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: auto;
+}
+
+/* Contenedor de resultados */
+.contenedor {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para los mensajes del resultado */
+.contenedor p {
+    background-color: #e7f9e7;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #b2d8b2;
+    color: #155724;
+    font-weight: bold;
+    overflow-x: auto;
+}
+
+/* Errores */
+.errores {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.errores pre {
+    background-color: #ffdddd;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #a00;
+    color: #a00;
+    overflow-x: auto;
+    font-weight: bold;
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+    }
+
+    textarea {
+        height: 150px;
+    }
+
+    input[type="submit"] {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}

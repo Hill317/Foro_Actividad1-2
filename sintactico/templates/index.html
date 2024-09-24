@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Sintáctico</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <h1>Analizador Sintáctico</h1><br>
+    <form method="post">
+        <label for="code">Code</label><br>
+        <textarea id="code" name="code" placeholder="//Escribe tu código"></textarea>
+        <br>
+        <input type="submit" value="Analizar">
+    </form>
+
+    <div class="codigo"></div>
+        {% if request.form.get('code') %}
+            <h3>Código analizado:</h3>
+            <pre>{{request.form.get('code')}}</pre>
+        {% endif %}
+    </div>
+
+    <div class="contenedor">
+        {% if resultado %}
+            <h2>Resultado del Análisis:</h2>
+            {% if color == 1%}
+                <p style="color: green; font-weight: bold;">{{resultado}}</p>
+            {% else %}
+                <p style="color: rgb(159, 4, 4); font-weight: bold;">{{resultado}}</p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="errores">
+        {% if errores %}
+            <h2>Errores Encontrados:</h2>
+            <pre style="color: red; font-weight: bold;">{{errores | join('\n')}}</pre>
+        {% endif %}
+    </div>
+
+</body>
+</html>
