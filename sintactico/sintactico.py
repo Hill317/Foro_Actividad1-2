@@ -1,34 +1,114 @@
 import ply.yacc as yacc
-from lexico import tokens
+import ply.lex as lex
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+reserved = {
+    'for' : 'FOR',
+    'int' : 'INT',
+}
+
+delimitador = {
+    '(' : 'PABIERTO',
+    ')' : 'PCERRADO',
+    '{' : 'LABIERTO',
+    '}' : 'LCERRADO'
+}
+
+identificador = {
+    'i' : 'I',
+    'System' : 'SYSTEM',
+    'out' : 'OUT',
+    'println' : 'PRINTLN'
+}
+
+simbolo = {
+    '.' : 'PUNTO',
+    ';' : 'PUNTOCOMA'
+}
+
+operador = {
+    '=' : 'IGUAL',
+    '<=' : 'MENORIGUAL',
+    '++' : 'INCREMENTO',
+    '+' : 'CONCATENACION',
+}
+
+tokens = ['NUMERO', 'CADENA'] + list(reserved.values()) + list(delimitador.values()) + list(identificador.values()) + list(simbolo.values()) + list(operador.values())
+
+t_ignore = ' \t\r'
+
+def t_INT(t):
+    r'int'
+    return t
+
+def t_FOR(t):
+    r'for'
+    return t
+
+def t_I(t):
+    r'i'
+    return t
+
+def t_SYSTEM(t):
+    r'System'
+    return t
+
+def t_OUT(t):
+    r'out'
+    return t
+
+def t_PRINTLN(t):
+    r'println'
+    return t
+
+
+t_PABIERTO = r'\('
+t_PCERRADO = r'\)'
+t_LABIERTO = r'\{'
+t_LCERRADO = r'\}'
+t_MENORIGUAL = r'<='
+t_IGUAL = r'='
+t_CONCATENACION = r'\+'
+t_INCREMENTO = r'\+\+'
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
+t_NUMERO = r'\d+'
+t_PUNTOCOMA = r';'
+t_PUNTO = r'.'
+t_CADENA = r'\".*?\"'
+
+def t_error(t): 
+    print('Caracter no valido',t.value[0])
+    t.lexer.skip(1)
+
+######################################
 errores = []
 
-def p_programa(p):
-    '''programa : declaracion_metodo bloque'''
-    print("Programa reconocido.")
+def p_ciclofor(p):
+    '''ciclofor : FOR PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO cuerpo'''
 
-def p_declaracion_metodo(p):
-    '''declaracion_metodo : PUBLIC STATIC VOID MAIN PABIERTO PCERRADO'''
-    print("Declaración del método main reconocida.")
+def p_inicializacion(p):
+    '''inicializacion : INT I IGUAL NUMERO'''
 
-def p_bloque(p):
-    '''bloque : LABIERTO declaracion LCERRADO'''
-    print("Bloque de código reconocido.")
+def p_condicion(p):
+    '''condicion : I MENORIGUAL NUMERO'''
 
-def p_declaracion(p):
-    '''declaracion : INT VARIABLE IGUAL numero PUNTOCOMA'''
-    print(f"Declaración reconocida: {p[2]} asignado a {p[4]}.")
+def p_incremento(p):
+    '''incremento : I INCREMENTO'''
 
-# def p_tipo(p):
-#     '''tipo : INT'''
-#     p[0] = 'int'
+def p_cuerpo(p):
+    '''cuerpo : LABIERTO sentencia LCERRADO'''
 
-def p_numero(p):
-    '''numero : NUMERO PUNTO NUMERO
-                 | NUMERO'''
+def p_sentencia(p):
+    '''sentencia : SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA'''
+
+def p_cadena(p):
+    '''cadena : CADENA'''
 
 # Manejo de errores en el parser
 def p_error(p):
@@ -46,7 +126,30 @@ def index():
 
     if request.method == 'POST':
         code = request.form.get('code')
+        lexer = lex.lex()
+        lexer.input(code)
+        
         parser = yacc.yacc()
+
+        result_lexema = []
+        token_count = { 'RESERVADA': 0, 'DELIMITADOR': 0, 'IDENTIFICADOR': 0, 'SIMBOLO': 0, 'OPERADOR': 0, 'NUMERO': 0, 'CADENA': 0 }
+
+        for tok in lexer:
+            if tok.type in reserved.values():
+                descripcion = "RESERVADA"
+            elif tok.type in delimitador.values():
+                descripcion = "DELIMITADOR"
+            elif tok.type in identificador.values():
+                descripcion = "IDENTIFICADOR"
+            elif tok.type in simbolo.values():
+                descripcion = "SIMBOLO"
+            elif tok.type in operador.values():
+                descripcion = "OPERADOR"
+            else:
+                descripcion = tok.type
+            
+            result_lexema.append((tok.type, tok.value, tok.lineno))
+            token_count[descripcion] += 1
 
         try:
             parser.parse(code)
@@ -59,12 +162,14 @@ def index():
             errores.append(str(e))
             result = "Error al analizar el código."
 
-        return render_template('index.html', code=code, errores=errores, color=color, resultado=result)
+        return render_template('index.html', code=code, errores=errores, color=color, resultado=result, tokens=result_lexema, token_count=token_count)
     return render_template('index.html', code=None)
 
+if __name__ == "__main__":
+    app.run(debug=True)
+
 # s = '''
-# public static void main()
-# {
-#     int n = 23.23;
+# for (int i = 1; i <= 5; i++) {
+# System.out.println ("El valor de la cifra es: " + i);
 # }
 # '''

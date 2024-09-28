@@ -1,219 +1,304 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    DIVI
-    DO
-    ELSE
-    FOR
-    IF
-    MULTI
-    RESTA
-    SUMA
-    WHILE
-
 Grammar
 
-Rule 0     S' -> programa
-Rule 1     programa -> declaracion_metodo bloque
-Rule 2     declaracion_metodo -> PUBLIC STATIC VOID MAIN PABIERTO PCERRADO
-Rule 3     bloque -> LABIERTO declaracion LCERRADO
-Rule 4     declaracion -> INT VARIABLE IGUAL numero PUNTOCOMA
-Rule 5     numero -> NUMERO PUNTO NUMERO
-Rule 6     numero -> NUMERO
+Rule 0     S' -> ciclofor
+Rule 1     ciclofor -> FOR PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO cuerpo
+Rule 2     inicializacion -> INT I IGUAL NUMERO
+Rule 3     condicion -> I MENORIGUAL NUMERO
+Rule 4     incremento -> I INCREMENTO
+Rule 5     cuerpo -> LABIERTO sentencia LCERRADO
+Rule 6     sentencia -> SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA
+Rule 7     cadena -> CADENA
 
 Terminals, with rules where they appear
 
-DIVI                 : 
-DO                   : 
-ELSE                 : 
-FOR                  : 
-IF                   : 
-IGUAL                : 4
-INT                  : 4
-LABIERTO             : 3
-LCERRADO             : 3
-MAIN                 : 2
-MULTI                : 
-NUMERO               : 5 5 6
-PABIERTO             : 2
-PCERRADO             : 2
-PUBLIC               : 2
-PUNTO                : 5
-PUNTOCOMA            : 4
-RESTA                : 
-STATIC               : 2
-SUMA                 : 
-VARIABLE             : 4
-VOID                 : 2
-WHILE                : 
+CADENA               : 7
+CONCATENACION        : 6
+FOR                  : 1
+I                    : 2 3 4 6
+IGUAL                : 2
+INCREMENTO           : 4
+INT                  : 2
+LABIERTO             : 5
+LCERRADO             : 5
+MENORIGUAL           : 3
+NUMERO               : 2 3
+OUT                  : 6
+PABIERTO             : 1 6
+PCERRADO             : 1 6
+PRINTLN              : 6
+PUNTO                : 6 6
+PUNTOCOMA            : 1 1 6
+SYSTEM               : 6
 error                : 
 
 Nonterminals, with rules where they appear
 
-bloque               : 1
-declaracion          : 3
-declaracion_metodo   : 1
-numero               : 4
-programa             : 0
+cadena               : 6
+ciclofor             : 0
+condicion            : 1
+cuerpo               : 1
+incremento           : 1
+inicializacion       : 1
+sentencia            : 5
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . programa
-    (1) programa -> . declaracion_metodo bloque
-    (2) declaracion_metodo -> . PUBLIC STATIC VOID MAIN PABIERTO PCERRADO
+    (0) S' -> . ciclofor
+    (1) ciclofor -> . FOR PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO cuerpo
 
-    PUBLIC          shift and go to state 3
+    FOR             shift and go to state 2
 
-    programa                       shift and go to state 1
-    declaracion_metodo             shift and go to state 2
+    ciclofor                       shift and go to state 1
 
 state 1
 
-    (0) S' -> programa .
+    (0) S' -> ciclofor .
 
 
 
 state 2
 
-    (1) programa -> declaracion_metodo . bloque
-    (3) bloque -> . LABIERTO declaracion LCERRADO
+    (1) ciclofor -> FOR . PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO cuerpo
 
-    LABIERTO        shift and go to state 5
+    PABIERTO        shift and go to state 3
 
-    bloque                         shift and go to state 4
 
 state 3
 
-    (2) declaracion_metodo -> PUBLIC . STATIC VOID MAIN PABIERTO PCERRADO
+    (1) ciclofor -> FOR PABIERTO . inicializacion PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO cuerpo
+    (2) inicializacion -> . INT I IGUAL NUMERO
 
-    STATIC          shift and go to state 6
+    INT             shift and go to state 5
 
+    inicializacion                 shift and go to state 4
 
 state 4
 
-    (1) programa -> declaracion_metodo bloque .
+    (1) ciclofor -> FOR PABIERTO inicializacion . PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO cuerpo
 
-    $end            reduce using rule 1 (programa -> declaracion_metodo bloque .)
+    PUNTOCOMA       shift and go to state 6
 
 
 state 5
 
-    (3) bloque -> LABIERTO . declaracion LCERRADO
-    (4) declaracion -> . INT VARIABLE IGUAL numero PUNTOCOMA
+    (2) inicializacion -> INT . I IGUAL NUMERO
 
-    INT             shift and go to state 8
+    I               shift and go to state 7
 
-    declaracion                    shift and go to state 7
 
 state 6
 
-    (2) declaracion_metodo -> PUBLIC STATIC . VOID MAIN PABIERTO PCERRADO
+    (1) ciclofor -> FOR PABIERTO inicializacion PUNTOCOMA . condicion PUNTOCOMA incremento PCERRADO cuerpo
+    (3) condicion -> . I MENORIGUAL NUMERO
 
-    VOID            shift and go to state 9
+    I               shift and go to state 9
 
+    condicion                      shift and go to state 8
 
 state 7
 
-    (3) bloque -> LABIERTO declaracion . LCERRADO
+    (2) inicializacion -> INT I . IGUAL NUMERO
 
-    LCERRADO        shift and go to state 10
+    IGUAL           shift and go to state 10
 
 
 state 8
 
-    (4) declaracion -> INT . VARIABLE IGUAL numero PUNTOCOMA
+    (1) ciclofor -> FOR PABIERTO inicializacion PUNTOCOMA condicion . PUNTOCOMA incremento PCERRADO cuerpo
 
-    VARIABLE        shift and go to state 11
+    PUNTOCOMA       shift and go to state 11
 
 
 state 9
 
-    (2) declaracion_metodo -> PUBLIC STATIC VOID . MAIN PABIERTO PCERRADO
+    (3) condicion -> I . MENORIGUAL NUMERO
 
-    MAIN            shift and go to state 12
+    MENORIGUAL      shift and go to state 12
 
 
 state 10
 
-    (3) bloque -> LABIERTO declaracion LCERRADO .
+    (2) inicializacion -> INT I IGUAL . NUMERO
 
-    $end            reduce using rule 3 (bloque -> LABIERTO declaracion LCERRADO .)
+    NUMERO          shift and go to state 13
 
 
 state 11
 
-    (4) declaracion -> INT VARIABLE . IGUAL numero PUNTOCOMA
+    (1) ciclofor -> FOR PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA . incremento PCERRADO cuerpo
+    (4) incremento -> . I INCREMENTO
 
-    IGUAL           shift and go to state 13
+    I               shift and go to state 15
 
+    incremento                     shift and go to state 14
 
 state 12
 
-    (2) declaracion_metodo -> PUBLIC STATIC VOID MAIN . PABIERTO PCERRADO
+    (3) condicion -> I MENORIGUAL . NUMERO
 
-    PABIERTO        shift and go to state 14
+    NUMERO          shift and go to state 16
 
 
 state 13
 
-    (4) declaracion -> INT VARIABLE IGUAL . numero PUNTOCOMA
-    (5) numero -> . NUMERO PUNTO NUMERO
-    (6) numero -> . NUMERO
+    (2) inicializacion -> INT I IGUAL NUMERO .
 
-    NUMERO          shift and go to state 16
+    PUNTOCOMA       reduce using rule 2 (inicializacion -> INT I IGUAL NUMERO .)
 
-    numero                         shift and go to state 15
 
 state 14
 
-    (2) declaracion_metodo -> PUBLIC STATIC VOID MAIN PABIERTO . PCERRADO
+    (1) ciclofor -> FOR PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA incremento . PCERRADO cuerpo
 
     PCERRADO        shift and go to state 17
 
 
 state 15
 
-    (4) declaracion -> INT VARIABLE IGUAL numero . PUNTOCOMA
+    (4) incremento -> I . INCREMENTO
 
-    PUNTOCOMA       shift and go to state 18
+    INCREMENTO      shift and go to state 18
 
 
 state 16
 
-    (5) numero -> NUMERO . PUNTO NUMERO
-    (6) numero -> NUMERO .
+    (3) condicion -> I MENORIGUAL NUMERO .
 
-    PUNTO           shift and go to state 19
-    PUNTOCOMA       reduce using rule 6 (numero -> NUMERO .)
+    PUNTOCOMA       reduce using rule 3 (condicion -> I MENORIGUAL NUMERO .)
 
 
 state 17
 
-    (2) declaracion_metodo -> PUBLIC STATIC VOID MAIN PABIERTO PCERRADO .
+    (1) ciclofor -> FOR PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO . cuerpo
+    (5) cuerpo -> . LABIERTO sentencia LCERRADO
 
-    LABIERTO        reduce using rule 2 (declaracion_metodo -> PUBLIC STATIC VOID MAIN PABIERTO PCERRADO .)
+    LABIERTO        shift and go to state 20
 
+    cuerpo                         shift and go to state 19
 
 state 18
 
-    (4) declaracion -> INT VARIABLE IGUAL numero PUNTOCOMA .
+    (4) incremento -> I INCREMENTO .
 
-    LCERRADO        reduce using rule 4 (declaracion -> INT VARIABLE IGUAL numero PUNTOCOMA .)
+    PCERRADO        reduce using rule 4 (incremento -> I INCREMENTO .)
 
 
 state 19
 
-    (5) numero -> NUMERO PUNTO . NUMERO
+    (1) ciclofor -> FOR PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO cuerpo .
 
-    NUMERO          shift and go to state 20
+    $end            reduce using rule 1 (ciclofor -> FOR PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO cuerpo .)
 
 
 state 20
 
-    (5) numero -> NUMERO PUNTO NUMERO .
+    (5) cuerpo -> LABIERTO . sentencia LCERRADO
+    (6) sentencia -> . SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA
 
-    PUNTOCOMA       reduce using rule 5 (numero -> NUMERO PUNTO NUMERO .)
+    SYSTEM          shift and go to state 22
+
+    sentencia                      shift and go to state 21
+
+state 21
+
+    (5) cuerpo -> LABIERTO sentencia . LCERRADO
+
+    LCERRADO        shift and go to state 23
+
+
+state 22
+
+    (6) sentencia -> SYSTEM . PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA
+
+    PUNTO           shift and go to state 24
+
+
+state 23
+
+    (5) cuerpo -> LABIERTO sentencia LCERRADO .
+
+    $end            reduce using rule 5 (cuerpo -> LABIERTO sentencia LCERRADO .)
+
+
+state 24
+
+    (6) sentencia -> SYSTEM PUNTO . OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA
+
+    OUT             shift and go to state 25
+
+
+state 25
+
+    (6) sentencia -> SYSTEM PUNTO OUT . PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA
+
+    PUNTO           shift and go to state 26
+
+
+state 26
+
+    (6) sentencia -> SYSTEM PUNTO OUT PUNTO . PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA
+
+    PRINTLN         shift and go to state 27
+
+
+state 27
+
+    (6) sentencia -> SYSTEM PUNTO OUT PUNTO PRINTLN . PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA
+
+    PABIERTO        shift and go to state 28
+
+
+state 28
+
+    (6) sentencia -> SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO . cadena CONCATENACION I PCERRADO PUNTOCOMA
+    (7) cadena -> . CADENA
+
+    CADENA          shift and go to state 30
+
+    cadena                         shift and go to state 29
+
+state 29
+
+    (6) sentencia -> SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena . CONCATENACION I PCERRADO PUNTOCOMA
+
+    CONCATENACION   shift and go to state 31
+
+
+state 30
+
+    (7) cadena -> CADENA .
+
+    CONCATENACION   reduce using rule 7 (cadena -> CADENA .)
+
+
+state 31
+
+    (6) sentencia -> SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION . I PCERRADO PUNTOCOMA
+
+    I               shift and go to state 32
+
+
+state 32
+
+    (6) sentencia -> SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I . PCERRADO PUNTOCOMA
+
+    PCERRADO        shift and go to state 33
+
+
+state 33
+
+    (6) sentencia -> SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 34
+
+
+state 34
+
+    (6) sentencia -> SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA .
+
+    LCERRADO        reduce using rule 6 (sentencia -> SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA .)
 

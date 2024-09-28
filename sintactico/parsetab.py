@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'DIVI DO ELSE FOR IF IGUAL INT LABIERTO LCERRADO MAIN MULTI NUMERO PABIERTO PCERRADO PUBLIC PUNTO PUNTOCOMA RESTA STATIC SUMA VARIABLE VOID WHILEprograma : declaracion_metodo bloquedeclaracion_metodo : PUBLIC STATIC VOID MAIN PABIERTO PCERRADObloque : LABIERTO declaracion LCERRADOdeclaracion : INT VARIABLE IGUAL numero PUNTOCOMAnumero : NUMERO PUNTO NUMERO\n                 | NUMERO'
+_lr_signature = 'CADENA CONCATENACION FOR I IGUAL INCREMENTO INT LABIERTO LCERRADO MENORIGUAL NUMERO OUT PABIERTO PCERRADO PRINTLN PUNTO PUNTOCOMA SYSTEMciclofor : FOR PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO cuerpoinicializacion : INT I IGUAL NUMEROcondicion : I MENORIGUAL NUMEROincremento : I INCREMENTOcuerpo : LABIERTO sentencia LCERRADOsentencia : SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMAcadena : CADENA'
     
-_lr_action_items = {'PUBLIC':([0,],[3,]),'$end':([1,4,10,],[0,-1,-3,]),'LABIERTO':([2,17,],[5,-2,]),'STATIC':([3,],[6,]),'INT':([5,],[8,]),'VOID':([6,],[9,]),'LCERRADO':([7,18,],[10,-4,]),'VARIABLE':([8,],[11,]),'MAIN':([9,],[12,]),'IGUAL':([11,],[13,]),'PABIERTO':([12,],[14,]),'NUMERO':([13,19,],[16,20,]),'PCERRADO':([14,],[17,]),'PUNTOCOMA':([15,16,20,],[18,-6,-5,]),'PUNTO':([16,],[19,]),}
+_lr_action_items = {'FOR':([0,],[2,]),'$end':([1,19,23,],[0,-1,-5,]),'PABIERTO':([2,27,],[3,28,]),'INT':([3,],[5,]),'PUNTOCOMA':([4,8,13,16,33,],[6,11,-2,-3,34,]),'I':([5,6,11,31,],[7,9,15,32,]),'IGUAL':([7,],[10,]),'MENORIGUAL':([9,],[12,]),'NUMERO':([10,12,],[13,16,]),'PCERRADO':([14,18,32,],[17,-4,33,]),'INCREMENTO':([15,],[18,]),'LABIERTO':([17,],[20,]),'SYSTEM':([20,],[22,]),'LCERRADO':([21,34,],[23,-6,]),'PUNTO':([22,25,],[24,26,]),'OUT':([24,],[25,]),'PRINTLN':([26,],[27,]),'CADENA':([28,],[30,]),'CONCATENACION':([29,30,],[31,-7,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'programa':([0,],[1,]),'declaracion_metodo':([0,],[2,]),'bloque':([2,],[4,]),'declaracion':([5,],[7,]),'numero':([13,],[15,]),}
+_lr_goto_items = {'ciclofor':([0,],[1,]),'inicializacion':([3,],[4,]),'condicion':([6,],[8,]),'incremento':([11,],[14,]),'cuerpo':([17,],[19,]),'sentencia':([20,],[21,]),'cadena':([28,],[29,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,11 +26,12 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> programa","S'",1,None,None,None),
-  ('programa -> declaracion_metodo bloque','programa',2,'p_programa','sintactico.py',8),
-  ('declaracion_metodo -> PUBLIC STATIC VOID MAIN PABIERTO PCERRADO','declaracion_metodo',6,'p_declaracion_metodo','sintactico.py',12),
-  ('bloque -> LABIERTO declaracion LCERRADO','bloque',3,'p_bloque','sintactico.py',16),
-  ('declaracion -> INT VARIABLE IGUAL numero PUNTOCOMA','declaracion',5,'p_declaracion','sintactico.py',20),
-  ('numero -> NUMERO PUNTO NUMERO','numero',3,'p_numero','sintactico.py',28),
-  ('numero -> NUMERO','numero',1,'p_numero','sintactico.py',29),
+  ("S' -> ciclofor","S'",1,None,None,None),
+  ('ciclofor -> FOR PABIERTO inicializacion PUNTOCOMA condicion PUNTOCOMA incremento PCERRADO cuerpo','ciclofor',9,'p_ciclofor','sintactico.py',93),
+  ('inicializacion -> INT I IGUAL NUMERO','inicializacion',4,'p_inicializacion','sintactico.py',96),
+  ('condicion -> I MENORIGUAL NUMERO','condicion',3,'p_condicion','sintactico.py',99),
+  ('incremento -> I INCREMENTO','incremento',2,'p_incremento','sintactico.py',102),
+  ('cuerpo -> LABIERTO sentencia LCERRADO','cuerpo',3,'p_cuerpo','sintactico.py',105),
+  ('sentencia -> SYSTEM PUNTO OUT PUNTO PRINTLN PABIERTO cadena CONCATENACION I PCERRADO PUNTOCOMA','sentencia',11,'p_sentencia','sintactico.py',108),
+  ('cadena -> CADENA','cadena',1,'p_cadena','sintactico.py',111),
 ]

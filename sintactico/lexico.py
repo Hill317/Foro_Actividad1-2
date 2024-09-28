@@ -2,14 +2,7 @@ import ply.lex as lex
 
 reserved = {
     'for' : 'FOR',
-    'while' : 'WHILE',
-    'do' : 'DO',
-    'if' : 'IF',
-    'else' : 'ELSE',
-    'static' : 'STATIC',
-    'void' : 'VOID',
     'int' : 'INT',
-    'public' : 'PUBLIC'
 }
 
 delimitador = {
@@ -20,7 +13,10 @@ delimitador = {
 }
 
 identificador = {
-    'main' : 'MAIN'
+    'i' : 'I',
+    'System' : 'SYSTEM',
+    'out' : 'OUT',
+    'println' : 'PRINTLN'
 }
 
 simbolo = {
@@ -30,34 +26,48 @@ simbolo = {
 
 operador = {
     '=' : 'IGUAL',
-    '+' : 'SUMA',
-    '-' : 'RESTA',
-    '*' : 'MULTI',
-    '/' : 'DIVI',
+    '<=' : 'MENORIGUAL',
+    '++' : 'INCREMENTO',
+    '+' : 'CONCATENACION',
 }
 
-tokens = ['NUMERO', 'VARIABLE'] + list(reserved.values()) + list(delimitador.values()) + list(identificador.values()) + list(simbolo.values()) + list(operador.values())
+tokens = ['NUMERO', 'CADENA'] + list(reserved.values()) + list(delimitador.values()) + list(identificador.values()) + list(simbolo.values()) + list(operador.values())
 
 t_ignore = ' \t\r'
 
-def t_MAIN(t):
-    r'main'
+def t_INT(t):
+    r'int'
     return t
 
-def t_VARIABLE(t):
-    r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = reserved.get(t.value,'VARIABLE')
+def t_FOR(t):
+    r'for'
     return t
+
+def t_I(t):
+    r'i'
+    return t
+
+def t_SYSTEM(t):
+    r'System'
+    return t
+
+def t_OUT(t):
+    r'out'
+    return t
+
+def t_PRINTLN(t):
+    r'println'
+    return t
+
 
 t_PABIERTO = r'\('
 t_PCERRADO = r'\)'
 t_LABIERTO = r'\{'
 t_LCERRADO = r'\}'
+t_MENORIGUAL = r'<='
 t_IGUAL = r'='
-t_SUMA = r'\+'
-t_RESTA = r'\-'
-t_MULTI = r'\*'
-t_DIVI = r'\/'
+t_CONCATENACION = r'\+'
+t_INCREMENTO = r'\+\+'
 
 def t_newline(t):
     r'\n+'
@@ -66,12 +76,13 @@ def t_newline(t):
 t_NUMERO = r'\d+'
 t_PUNTOCOMA = r';'
 t_PUNTO = r'.'
+t_CADENA = r'\".*?\"'
 
 def t_error(t): 
     print('Caracter no valido',t.value[0])
     t.lexer.skip(1)
 
-lexer = lex.lex()
+# lexer = lex.lex()
 
 # data = '''
 # public static void main()
