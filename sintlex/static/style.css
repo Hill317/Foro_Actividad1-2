@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff3e0; /* Color de fondo claro */
+    color: #4e342e; /* Color de texto marrón oscuro */
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #ff9800; /* Naranja brillante */
+    text-align: center;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: space-between;
+}
+
+.contenedor > div {
+    width: 48%;
+    padding: 20px;
+    border: 1px solid #ff9800; /* Borde naranja */
+    border-radius: 5px; /* Esquinas redondeadas */
+    background-color: #fff; /* Fondo blanco para el contenido */
+    overflow-x: hidden;
+    max-height: 400px; /* Limita la altura del div */
+    overflow-y: auto; /* Habilita desplazamiento vertical */
+}
+
+label {
+    font-weight: bold;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    border: 1px solid #ff9800; /* Borde naranja */
+    border-radius: 5px; /* Esquinas redondeadas */
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+button {
+    background-color: #ff9800; /* Naranja brillante */
+    color: white; /* Color del texto blanco */
+    border: none;
+    border-radius: 5px; /* Esquinas redondeadas */
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #e68900; /* Naranja más oscuro al pasar el ratón */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+}
+
+th, td {
+    border: 1px solid #ff9800; /* Borde naranja */
+    padding: 10px;
+    text-align: center;
+    overflow: hidden; /* Evita el desbordamiento del texto */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es demasiado largo */
+    white-space: nowrap;
+}
+
+th {
+    background-color: #ff9800; /* Naranja brillante */
+    color: white; /* Texto blanco */
+}

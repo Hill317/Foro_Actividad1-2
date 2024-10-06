@@ -1,0 +1,125 @@
+import ply.yacc as yacc
+from flask import Flask, render_template, request
+from lexico import tokens, lexer
+
+errores = []
+var = []
+var2 = []
+
+def p_programa(p):
+    '''programa : PROGRAMA IDENTIFICADOR PABIERTO PCERRADO LABIERTO cuerpo LCERRADO'''
+
+def p_cuerpo(p):
+    '''cuerpo : inicializacion leer igual imprimir final '''
+
+def p_inicializacion(p):
+    '''inicializacion : INT variables PUNTOCOMA'''
+
+def p_variables(p):
+    '''variables : VARIABLE variables
+                   | COMA variables
+                   | vacio
+                   '''
+    
+    if (len(p) == 3) and p[1] != ',':
+        var.append(p[1])
+
+
+def p_leer(p):
+    '''leer : READ VARIABLE PUNTOCOMA leer
+              | READ VARIABLE PUNTOCOMA'''
+    
+    if p[2] not in var:
+        error_msg = f"Error: Variable '{p[2]}' no declarada"
+        errores.append(error_msg)
+
+    var2.append(p[2])
+
+def p_igual(p):
+    '''igual : VARIABLE IGUAL VARIABLE SUMA VARIABLE PUNTOCOMA'''
+
+    if p[1] not in var:
+        error_msg = f"Error: Variable '{p[1]}' no declarada"
+        errores.append(error_msg)
+
+    for vari in [p[3], p[5]]:
+        if vari not in var2:
+            if vari in var:
+                error_msg = f"Error: Variable '{vari}' no leída antes"
+                errores.append(error_msg)
+            else:
+                error_msg = f"Error: Variable '{vari}' no declarada"
+                errores.append(error_msg)
+
+def p_imprimir(p):
+    '''imprimir : PRINTF PABIERTO COMILLA cadena COMILLA PCERRADO PUNTOCOMA'''
+
+def p_cadena(p):
+    '''cadena : CADENA CADENA CADENA
+                '''
+
+def p_final(p):
+    '''final : END PUNTOCOMA'''
+
+# Manejo de errores en el parser
+def p_error(p):
+    if p:
+        if p.type == 'CADENA':
+            pass
+        else:
+            error_msg = f"Error de sintaxis en '{p.value}' en la línea {p.lineno}"
+            errores.append(error_msg)
+    else:
+        error_msg = "Error de sintaxis: EOF inesperado"
+        errores.append(error_msg)
+
+def p_vacio(p):
+    'vacio :'
+    pass
+
+parser = yacc.yacc()
+
+
+data = '''
+programa Suma(){
+    int a,b,c;
+    read a;
+    read b;
+    c=a+b;
+printf ("la suma es");
+end;
+}
+'''
+lexer.input(data)
+
+while True:
+    tok = lexer.token()
+    if not tok: 
+        break      # No more input
+    print(tok.type, tok.value)
+
+try:
+    parser.parse(data)
+    if errores:
+        result = "Código no aceptado."
+    else:
+        result = "Código aceptado."
+        color = 1
+except Exception as e:
+    errores.append(str(e))
+    result = "Error al analizar el código."
+
+print(result)
+print(var)
+print(errores)
+
+# data = '''
+# programa Suma(){\
+#     int a,b,c;
+#     read a;
+#     read b;
+#     c=a+b;
+# printf ("la suma es");
+# end;
+# }
+# '''

@@ -1,0 +1,409 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> PROGRAMA IDENTIFICADOR PABIERTO PCERRADO LABIERTO cuerpo LCERRADO
+Rule 2     cuerpo -> inicializacion leer igual imprimir final
+Rule 3     inicializacion -> INT variables PUNTOCOMA
+Rule 4     variables -> VARIABLE variables
+Rule 5     variables -> COMA variables
+Rule 6     variables -> vacio
+Rule 7     leer -> READ VARIABLE PUNTOCOMA leer
+Rule 8     leer -> READ VARIABLE PUNTOCOMA
+Rule 9     igual -> VARIABLE IGUAL VARIABLE SUMA VARIABLE PUNTOCOMA
+Rule 10    imprimir -> PRINTF PABIERTO COMILLA cadena COMILLA PCERRADO PUNTOCOMA
+Rule 11    cadena -> CADENA CADENA CADENA
+Rule 12    final -> END PUNTOCOMA
+Rule 13    vacio -> <empty>
+
+Terminals, with rules where they appear
+
+CADENA               : 11 11 11
+COMA                 : 5
+COMILLA              : 10 10
+END                  : 12
+IDENTIFICADOR        : 1
+IGUAL                : 9
+INT                  : 3
+LABIERTO             : 1
+LCERRADO             : 1
+PABIERTO             : 1 10
+PCERRADO             : 1 10
+PRINTF               : 10
+PROGRAMA             : 1
+PUNTOCOMA            : 3 7 8 9 10 12
+READ                 : 7 8
+SUMA                 : 9
+VARIABLE             : 4 7 8 9 9 9
+error                : 
+
+Nonterminals, with rules where they appear
+
+cadena               : 10
+cuerpo               : 1
+final                : 2
+igual                : 2
+imprimir             : 2
+inicializacion       : 2
+leer                 : 2 7
+programa             : 0
+vacio                : 6
+variables            : 3 4 5
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . PROGRAMA IDENTIFICADOR PABIERTO PCERRADO LABIERTO cuerpo LCERRADO
+
+    PROGRAMA        shift and go to state 2
+
+    programa                       shift and go to state 1
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> PROGRAMA . IDENTIFICADOR PABIERTO PCERRADO LABIERTO cuerpo LCERRADO
+
+    IDENTIFICADOR   shift and go to state 3
+
+
+state 3
+
+    (1) programa -> PROGRAMA IDENTIFICADOR . PABIERTO PCERRADO LABIERTO cuerpo LCERRADO
+
+    PABIERTO        shift and go to state 4
+
+
+state 4
+
+    (1) programa -> PROGRAMA IDENTIFICADOR PABIERTO . PCERRADO LABIERTO cuerpo LCERRADO
+
+    PCERRADO        shift and go to state 5
+
+
+state 5
+
+    (1) programa -> PROGRAMA IDENTIFICADOR PABIERTO PCERRADO . LABIERTO cuerpo LCERRADO
+
+    LABIERTO        shift and go to state 6
+
+
+state 6
+
+    (1) programa -> PROGRAMA IDENTIFICADOR PABIERTO PCERRADO LABIERTO . cuerpo LCERRADO
+    (2) cuerpo -> . inicializacion leer igual imprimir final
+    (3) inicializacion -> . INT variables PUNTOCOMA
+
+    INT             shift and go to state 9
+
+    cuerpo                         shift and go to state 7
+    inicializacion                 shift and go to state 8
+
+state 7
+
+    (1) programa -> PROGRAMA IDENTIFICADOR PABIERTO PCERRADO LABIERTO cuerpo . LCERRADO
+
+    LCERRADO        shift and go to state 10
+
+
+state 8
+
+    (2) cuerpo -> inicializacion . leer igual imprimir final
+    (7) leer -> . READ VARIABLE PUNTOCOMA leer
+    (8) leer -> . READ VARIABLE PUNTOCOMA
+
+    READ            shift and go to state 12
+
+    leer                           shift and go to state 11
+
+state 9
+
+    (3) inicializacion -> INT . variables PUNTOCOMA
+    (4) variables -> . VARIABLE variables
+    (5) variables -> . COMA variables
+    (6) variables -> . vacio
+    (13) vacio -> .
+
+    VARIABLE        shift and go to state 14
+    COMA            shift and go to state 15
+    PUNTOCOMA       reduce using rule 13 (vacio -> .)
+
+    variables                      shift and go to state 13
+    vacio                          shift and go to state 16
+
+state 10
+
+    (1) programa -> PROGRAMA IDENTIFICADOR PABIERTO PCERRADO LABIERTO cuerpo LCERRADO .
+
+    $end            reduce using rule 1 (programa -> PROGRAMA IDENTIFICADOR PABIERTO PCERRADO LABIERTO cuerpo LCERRADO .)
+
+
+state 11
+
+    (2) cuerpo -> inicializacion leer . igual imprimir final
+    (9) igual -> . VARIABLE IGUAL VARIABLE SUMA VARIABLE PUNTOCOMA
+
+    VARIABLE        shift and go to state 18
+
+    igual                          shift and go to state 17
+
+state 12
+
+    (7) leer -> READ . VARIABLE PUNTOCOMA leer
+    (8) leer -> READ . VARIABLE PUNTOCOMA
+
+    VARIABLE        shift and go to state 19
+
+
+state 13
+
+    (3) inicializacion -> INT variables . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 20
+
+
+state 14
+
+    (4) variables -> VARIABLE . variables
+    (4) variables -> . VARIABLE variables
+    (5) variables -> . COMA variables
+    (6) variables -> . vacio
+    (13) vacio -> .
+
+    VARIABLE        shift and go to state 14
+    COMA            shift and go to state 15
+    PUNTOCOMA       reduce using rule 13 (vacio -> .)
+
+    variables                      shift and go to state 21
+    vacio                          shift and go to state 16
+
+state 15
+
+    (5) variables -> COMA . variables
+    (4) variables -> . VARIABLE variables
+    (5) variables -> . COMA variables
+    (6) variables -> . vacio
+    (13) vacio -> .
+
+    VARIABLE        shift and go to state 14
+    COMA            shift and go to state 15
+    PUNTOCOMA       reduce using rule 13 (vacio -> .)
+
+    variables                      shift and go to state 22
+    vacio                          shift and go to state 16
+
+state 16
+
+    (6) variables -> vacio .
+
+    PUNTOCOMA       reduce using rule 6 (variables -> vacio .)
+
+
+state 17
+
+    (2) cuerpo -> inicializacion leer igual . imprimir final
+    (10) imprimir -> . PRINTF PABIERTO COMILLA cadena COMILLA PCERRADO PUNTOCOMA
+
+    PRINTF          shift and go to state 24
+
+    imprimir                       shift and go to state 23
+
+state 18
+
+    (9) igual -> VARIABLE . IGUAL VARIABLE SUMA VARIABLE PUNTOCOMA
+
+    IGUAL           shift and go to state 25
+
+
+state 19
+
+    (7) leer -> READ VARIABLE . PUNTOCOMA leer
+    (8) leer -> READ VARIABLE . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 26
+
+
+state 20
+
+    (3) inicializacion -> INT variables PUNTOCOMA .
+
+    READ            reduce using rule 3 (inicializacion -> INT variables PUNTOCOMA .)
+
+
+state 21
+
+    (4) variables -> VARIABLE variables .
+
+    PUNTOCOMA       reduce using rule 4 (variables -> VARIABLE variables .)
+
+
+state 22
+
+    (5) variables -> COMA variables .
+
+    PUNTOCOMA       reduce using rule 5 (variables -> COMA variables .)
+
+
+state 23
+
+    (2) cuerpo -> inicializacion leer igual imprimir . final
+    (12) final -> . END PUNTOCOMA
+
+    END             shift and go to state 28
+
+    final                          shift and go to state 27
+
+state 24
+
+    (10) imprimir -> PRINTF . PABIERTO COMILLA cadena COMILLA PCERRADO PUNTOCOMA
+
+    PABIERTO        shift and go to state 29
+
+
+state 25
+
+    (9) igual -> VARIABLE IGUAL . VARIABLE SUMA VARIABLE PUNTOCOMA
+
+    VARIABLE        shift and go to state 30
+
+
+state 26
+
+    (7) leer -> READ VARIABLE PUNTOCOMA . leer
+    (8) leer -> READ VARIABLE PUNTOCOMA .
+    (7) leer -> . READ VARIABLE PUNTOCOMA leer
+    (8) leer -> . READ VARIABLE PUNTOCOMA
+
+    VARIABLE        reduce using rule 8 (leer -> READ VARIABLE PUNTOCOMA .)
+    READ            shift and go to state 12
+
+    leer                           shift and go to state 31
+
+state 27
+
+    (2) cuerpo -> inicializacion leer igual imprimir final .
+
+    LCERRADO        reduce using rule 2 (cuerpo -> inicializacion leer igual imprimir final .)
+
+
+state 28
+
+    (12) final -> END . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 32
+
+
+state 29
+
+    (10) imprimir -> PRINTF PABIERTO . COMILLA cadena COMILLA PCERRADO PUNTOCOMA
+
+    COMILLA         shift and go to state 33
+
+
+state 30
+
+    (9) igual -> VARIABLE IGUAL VARIABLE . SUMA VARIABLE PUNTOCOMA
+
+    SUMA            shift and go to state 34
+
+
+state 31
+
+    (7) leer -> READ VARIABLE PUNTOCOMA leer .
+
+    VARIABLE        reduce using rule 7 (leer -> READ VARIABLE PUNTOCOMA leer .)
+
+
+state 32
+
+    (12) final -> END PUNTOCOMA .
+
+    LCERRADO        reduce using rule 12 (final -> END PUNTOCOMA .)
+
+
+state 33
+
+    (10) imprimir -> PRINTF PABIERTO COMILLA . cadena COMILLA PCERRADO PUNTOCOMA
+    (11) cadena -> . CADENA CADENA CADENA
+
+    CADENA          shift and go to state 36
+
+    cadena                         shift and go to state 35
+
+state 34
+
+    (9) igual -> VARIABLE IGUAL VARIABLE SUMA . VARIABLE PUNTOCOMA
+
+    VARIABLE        shift and go to state 37
+
+
+state 35
+
+    (10) imprimir -> PRINTF PABIERTO COMILLA cadena . COMILLA PCERRADO PUNTOCOMA
+
+    COMILLA         shift and go to state 38
+
+
+state 36
+
+    (11) cadena -> CADENA . CADENA CADENA
+
+    CADENA          shift and go to state 39
+
+
+state 37
+
+    (9) igual -> VARIABLE IGUAL VARIABLE SUMA VARIABLE . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 40
+
+
+state 38
+
+    (10) imprimir -> PRINTF PABIERTO COMILLA cadena COMILLA . PCERRADO PUNTOCOMA
+
+    PCERRADO        shift and go to state 41
+
+
+state 39
+
+    (11) cadena -> CADENA CADENA . CADENA
+
+    CADENA          shift and go to state 42
+
+
+state 40
+
+    (9) igual -> VARIABLE IGUAL VARIABLE SUMA VARIABLE PUNTOCOMA .
+
+    PRINTF          reduce using rule 9 (igual -> VARIABLE IGUAL VARIABLE SUMA VARIABLE PUNTOCOMA .)
+
+
+state 41
+
+    (10) imprimir -> PRINTF PABIERTO COMILLA cadena COMILLA PCERRADO . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 43
+
+
+state 42
+
+    (11) cadena -> CADENA CADENA CADENA .
+
+    COMILLA         reduce using rule 11 (cadena -> CADENA CADENA CADENA .)
+
+
+state 43
+
+    (10) imprimir -> PRINTF PABIERTO COMILLA cadena COMILLA PCERRADO PUNTOCOMA .
+
+    END             reduce using rule 10 (imprimir -> PRINTF PABIERTO COMILLA cadena COMILLA PCERRADO PUNTOCOMA .)
+

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Sintáctico y Léxico</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <style>
+        .contenedor {
+            display: flex;
+        }
+        .contenedor > div {
+            width: 50%;
+        }
+    </style>
+
+    <script>
+        window.onload = function() {
+            // Cargar el contenido guardado del textarea
+            const savedContent = localStorage.getItem('textareaContent');
+            if (savedContent) {
+                document.getElementById('code').value = savedContent;
+            }
+
+            // Guardar el contenido del textarea cuando cambia
+            document.getElementById('code').addEventListener('input', function() {
+                localStorage.setItem('textareaContent', this.value);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Analizador Sintáctico y Léxico</h1><br>
+
+    <div class="contenedor">
+        <div> <!-- ENTRADA -->
+            <form method="post">
+                <label for="code">Code</label><br>
+                <textarea id="code" name="code" placeholder="//Escribe tu código"></textarea>
+                <br>
+                <button type="submit" name="submit_type" value="lexico">Análisis Léxico</button>
+                <button type="submit" name="submit_type" value="sintactico">Análisis Sintáctico</button>
+            </form>
+        </div>
+
+        <div> <!-- RESULTADOS -->
+            {% if valor == 1 %}
+                <table>
+                    <tr>
+                        <th>Línea</th>
+                        <th>Valor</th>
+                        <th>RESERVADA</th>
+                        <th>DELIMITADOR</th>
+                        <th>OPERADOR</th>
+                        <th>SIGNO</th>
+                        <th>VARIABLE</th>
+                        <th>IDENTIFICADOR</th>
+                        <th>CADENA</th>
+                    </tr>
+                    {% for linea, valor, pr, deli, ope, sig, variable, iden, cadena in tokens %}
+                    <tr>
+                        <td>{{linea}}</td>
+                        <td>{{valor}}</td>
+                        <td>{{pr}}</td>
+                        <td>{{deli}}</td>
+                        <td>{{ope}}</td>
+                        <td>{{sig}}</td>
+                        <td>{{variable}}</td>
+                        <td>{{iden}}</td>
+                        <td>{{cadena}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% elif valor == 2 %}
+                <table>
+                    <tr>
+                        <th>{{resultado}}</th>
+                    </tr>
+                    {% for error in errores %}
+                    <tr>
+                        <td>{{error}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p></p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
