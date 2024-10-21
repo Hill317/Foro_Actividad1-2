@@ -1,0 +1,271 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> inicio
+Rule 1     inicio -> inicio SUMA medio
+Rule 2     inicio -> inicio RESTA medio
+Rule 3     inicio -> medio
+Rule 4     medio -> medio MULTI final
+Rule 5     medio -> medio DIVI final
+Rule 6     medio -> final
+Rule 7     final -> PABIERTO inicio PCERRADO
+Rule 8     final -> NUMERO
+Rule 9     final -> DECIMAL
+
+Terminals, with rules where they appear
+
+DECIMAL              : 9
+DIVI                 : 5
+MULTI                : 4
+NUMERO               : 8
+PABIERTO             : 7
+PCERRADO             : 7
+RESTA                : 2
+SUMA                 : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+final                : 4 5 6
+inicio               : 1 2 7 0
+medio                : 1 2 3 4 5
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . inicio
+    (1) inicio -> . inicio SUMA medio
+    (2) inicio -> . inicio RESTA medio
+    (3) inicio -> . medio
+    (4) medio -> . medio MULTI final
+    (5) medio -> . medio DIVI final
+    (6) medio -> . final
+    (7) final -> . PABIERTO inicio PCERRADO
+    (8) final -> . NUMERO
+    (9) final -> . DECIMAL
+
+    PABIERTO        shift and go to state 4
+    NUMERO          shift and go to state 5
+    DECIMAL         shift and go to state 6
+
+    inicio                         shift and go to state 1
+    medio                          shift and go to state 2
+    final                          shift and go to state 3
+
+state 1
+
+    (0) S' -> inicio .
+    (1) inicio -> inicio . SUMA medio
+    (2) inicio -> inicio . RESTA medio
+
+    SUMA            shift and go to state 7
+    RESTA           shift and go to state 8
+
+
+state 2
+
+    (3) inicio -> medio .
+    (4) medio -> medio . MULTI final
+    (5) medio -> medio . DIVI final
+
+    SUMA            reduce using rule 3 (inicio -> medio .)
+    RESTA           reduce using rule 3 (inicio -> medio .)
+    $end            reduce using rule 3 (inicio -> medio .)
+    PCERRADO        reduce using rule 3 (inicio -> medio .)
+    MULTI           shift and go to state 9
+    DIVI            shift and go to state 10
+
+
+state 3
+
+    (6) medio -> final .
+
+    MULTI           reduce using rule 6 (medio -> final .)
+    DIVI            reduce using rule 6 (medio -> final .)
+    SUMA            reduce using rule 6 (medio -> final .)
+    RESTA           reduce using rule 6 (medio -> final .)
+    $end            reduce using rule 6 (medio -> final .)
+    PCERRADO        reduce using rule 6 (medio -> final .)
+
+
+state 4
+
+    (7) final -> PABIERTO . inicio PCERRADO
+    (1) inicio -> . inicio SUMA medio
+    (2) inicio -> . inicio RESTA medio
+    (3) inicio -> . medio
+    (4) medio -> . medio MULTI final
+    (5) medio -> . medio DIVI final
+    (6) medio -> . final
+    (7) final -> . PABIERTO inicio PCERRADO
+    (8) final -> . NUMERO
+    (9) final -> . DECIMAL
+
+    PABIERTO        shift and go to state 4
+    NUMERO          shift and go to state 5
+    DECIMAL         shift and go to state 6
+
+    inicio                         shift and go to state 11
+    medio                          shift and go to state 2
+    final                          shift and go to state 3
+
+state 5
+
+    (8) final -> NUMERO .
+
+    MULTI           reduce using rule 8 (final -> NUMERO .)
+    DIVI            reduce using rule 8 (final -> NUMERO .)
+    SUMA            reduce using rule 8 (final -> NUMERO .)
+    RESTA           reduce using rule 8 (final -> NUMERO .)
+    $end            reduce using rule 8 (final -> NUMERO .)
+    PCERRADO        reduce using rule 8 (final -> NUMERO .)
+
+
+state 6
+
+    (9) final -> DECIMAL .
+
+    MULTI           reduce using rule 9 (final -> DECIMAL .)
+    DIVI            reduce using rule 9 (final -> DECIMAL .)
+    SUMA            reduce using rule 9 (final -> DECIMAL .)
+    RESTA           reduce using rule 9 (final -> DECIMAL .)
+    $end            reduce using rule 9 (final -> DECIMAL .)
+    PCERRADO        reduce using rule 9 (final -> DECIMAL .)
+
+
+state 7
+
+    (1) inicio -> inicio SUMA . medio
+    (4) medio -> . medio MULTI final
+    (5) medio -> . medio DIVI final
+    (6) medio -> . final
+    (7) final -> . PABIERTO inicio PCERRADO
+    (8) final -> . NUMERO
+    (9) final -> . DECIMAL
+
+    PABIERTO        shift and go to state 4
+    NUMERO          shift and go to state 5
+    DECIMAL         shift and go to state 6
+
+    medio                          shift and go to state 12
+    final                          shift and go to state 3
+
+state 8
+
+    (2) inicio -> inicio RESTA . medio
+    (4) medio -> . medio MULTI final
+    (5) medio -> . medio DIVI final
+    (6) medio -> . final
+    (7) final -> . PABIERTO inicio PCERRADO
+    (8) final -> . NUMERO
+    (9) final -> . DECIMAL
+
+    PABIERTO        shift and go to state 4
+    NUMERO          shift and go to state 5
+    DECIMAL         shift and go to state 6
+
+    medio                          shift and go to state 13
+    final                          shift and go to state 3
+
+state 9
+
+    (4) medio -> medio MULTI . final
+    (7) final -> . PABIERTO inicio PCERRADO
+    (8) final -> . NUMERO
+    (9) final -> . DECIMAL
+
+    PABIERTO        shift and go to state 4
+    NUMERO          shift and go to state 5
+    DECIMAL         shift and go to state 6
+
+    final                          shift and go to state 14
+
+state 10
+
+    (5) medio -> medio DIVI . final
+    (7) final -> . PABIERTO inicio PCERRADO
+    (8) final -> . NUMERO
+    (9) final -> . DECIMAL
+
+    PABIERTO        shift and go to state 4
+    NUMERO          shift and go to state 5
+    DECIMAL         shift and go to state 6
+
+    final                          shift and go to state 15
+
+state 11
+
+    (7) final -> PABIERTO inicio . PCERRADO
+    (1) inicio -> inicio . SUMA medio
+    (2) inicio -> inicio . RESTA medio
+
+    PCERRADO        shift and go to state 16
+    SUMA            shift and go to state 7
+    RESTA           shift and go to state 8
+
+
+state 12
+
+    (1) inicio -> inicio SUMA medio .
+    (4) medio -> medio . MULTI final
+    (5) medio -> medio . DIVI final
+
+    SUMA            reduce using rule 1 (inicio -> inicio SUMA medio .)
+    RESTA           reduce using rule 1 (inicio -> inicio SUMA medio .)
+    $end            reduce using rule 1 (inicio -> inicio SUMA medio .)
+    PCERRADO        reduce using rule 1 (inicio -> inicio SUMA medio .)
+    MULTI           shift and go to state 9
+    DIVI            shift and go to state 10
+
+
+state 13
+
+    (2) inicio -> inicio RESTA medio .
+    (4) medio -> medio . MULTI final
+    (5) medio -> medio . DIVI final
+
+    SUMA            reduce using rule 2 (inicio -> inicio RESTA medio .)
+    RESTA           reduce using rule 2 (inicio -> inicio RESTA medio .)
+    $end            reduce using rule 2 (inicio -> inicio RESTA medio .)
+    PCERRADO        reduce using rule 2 (inicio -> inicio RESTA medio .)
+    MULTI           shift and go to state 9
+    DIVI            shift and go to state 10
+
+
+state 14
+
+    (4) medio -> medio MULTI final .
+
+    MULTI           reduce using rule 4 (medio -> medio MULTI final .)
+    DIVI            reduce using rule 4 (medio -> medio MULTI final .)
+    SUMA            reduce using rule 4 (medio -> medio MULTI final .)
+    RESTA           reduce using rule 4 (medio -> medio MULTI final .)
+    $end            reduce using rule 4 (medio -> medio MULTI final .)
+    PCERRADO        reduce using rule 4 (medio -> medio MULTI final .)
+
+
+state 15
+
+    (5) medio -> medio DIVI final .
+
+    MULTI           reduce using rule 5 (medio -> medio DIVI final .)
+    DIVI            reduce using rule 5 (medio -> medio DIVI final .)
+    SUMA            reduce using rule 5 (medio -> medio DIVI final .)
+    RESTA           reduce using rule 5 (medio -> medio DIVI final .)
+    $end            reduce using rule 5 (medio -> medio DIVI final .)
+    PCERRADO        reduce using rule 5 (medio -> medio DIVI final .)
+
+
+state 16
+
+    (7) final -> PABIERTO inicio PCERRADO .
+
+    MULTI           reduce using rule 7 (final -> PABIERTO inicio PCERRADO .)
+    DIVI            reduce using rule 7 (final -> PABIERTO inicio PCERRADO .)
+    SUMA            reduce using rule 7 (final -> PABIERTO inicio PCERRADO .)
+    RESTA           reduce using rule 7 (final -> PABIERTO inicio PCERRADO .)
+    $end            reduce using rule 7 (final -> PABIERTO inicio PCERRADO .)
+    PCERRADO        reduce using rule 7 (final -> PABIERTO inicio PCERRADO .)
+

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='arbol.css')}}">
+    <title>Arbol sintactico</title>
+</head>
+<body>
+    <div>
+    <form action="" method="post">
+        <button type="submit" name="ir_index" value="true" class="extra">← Volver</button>
+    </form>
+    <h1>Árbol Sintáctico</h1>
+    </div>
+    <div>
+    {% if valido == 1 %}
+        <img src="../static/arbol_sintactico.png" alt="Árbol Sintáctico" width="500" height="300">
+    {% else %}
+        <p>No hay árbol sintáctico</p>
+    {% endif %}
+    </div>
+</body>
+</html>
