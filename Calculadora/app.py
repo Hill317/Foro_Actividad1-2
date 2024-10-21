@@ -1,97 +1,96 @@
 from lex import crear_lexer
 from sintactico import crear_parser, errores
-from flask import Flask, render_template, request
+from arbol import crear_arbol, graficar_arbol
+from flask import Flask, render_template, request, url_for, redirect
+import os
 
 app = Flask(__name__)
+
+def imprimir_arbol(nodo, nivel=0):
+    if nodo is not None:
+        print("  " * nivel + repr(nodo))
+        imprimir_arbol(nodo.izquierdo, nivel + 1)
+        imprimir_arbol(nodo.derecho, nivel + 1)
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
     if request.method == 'POST':
         code = request.form.get('code')
+        valor = 1
+
+        if 'ir_arbol' in request.form and request.form.get('code') != '':
+            if valor == 1:
+                return redirect(url_for('arbol', valido=1))
 
         lexer = crear_lexer()
         parser = crear_parser()
+        arbol = crear_arbol()
 
         errores.clear()
 
         lexer.input(code)
-        resultado = parser.parse(code, lexer=lexer)
-        if resultado % 1 == 0:
-            resultado = int(resultado)
+        result_lexema = []
 
-        return render_template('index.html', valor=1, resultado=resultado)
+        for tok in lexer:
+            if tok.type == 'PABIERTO':
+                descripcion = "Paréntesis izquierdo"
+            elif tok.type == 'PCERRADO':
+                descripcion = "Paréntesis derecho"
+            elif tok.type == 'SUMA':
+                descripcion = "Signo suma"
+            elif tok.type == 'RESTA':
+                descripcion = "Signo resta"
+            elif tok.type == 'MULTI':
+                descripcion = "Signo multiplicación"
+            elif tok.type == 'DIVI':
+                descripcion = "Signo división"
+            elif tok.type == 'NUMERO':
+                descripcion = "Número"
+            else:
+                descripcion = "Decimal"
+                
+            result_lexema.append((tok.value, descripcion))
 
-    return render_template('index.html', valor=0)
+        try:
+            resultado = parser.parse(code, lexer=lexer)
+            nodos = arbol.parse(code, lexer=lexer)
+            if resultado % 1 == 0:
+                resultado = int(resultado)
+            # Genera el gráfico del árbol
+            if nodos:  # Asegúrate de que hay nodos para graficar
+                imprimir_arbol(nodos)
+                graficar_arbol(nodos)  # Graficar el primer nodo como raíz
+                arbol_img = "static/arbol_sintactico.png"  # Ruta de la imagen generada
+            else:
+                arbol_img = None  # O maneja el caso cuando no hay nodos
+
+        except Exception as e:
+            if not resultado:
+                pass
+            else:
+                resultado = errores[0]
+                valor = 0
+            
+
+        return render_template('index.html', valor=valor, resultado=resultado, tokens=result_lexema)
+
+    return render_template('index.html', valor=0, resultado='')
+
+@app.route('/arbol', methods=['GET', 'POST'])
+def arbol():
+    if request.method == 'POST':
+        if 'ir_index' in request.form:
+            return redirect(url_for('index'))
+
+    try:
+        valido = int(request.args.get('valido', 0))
+
+        return render_template('arbol.html', valido=valido)
+    
+    except Exception as e:
+        pass
+
+    return render_template('arbol.html', valido=0)
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-# @app.route('/', methods = ['GET','POST'])
-# def index():
-#     global errores
-#     global var
-#     global var2
-
-#     errores = []
-#     color = 0
-
-#     if request.method == 'POST':
-#         boton = request.form.get('submit_type')
-#         if boton == 'lexico':
-#             code = request.form.get('code')
-#             lexer = crear_lexer()
-#             lexer.input(code)
-            
-
-#             result_lexema = []
-#             token_count = { 'RESERVADA': 0, 'DELIMITADOR': 0, 'OPERADOR': 0, 'SIGNO': 0, 'VARIABLE': 0, 'IDENTIFICADOR': 0, 'CADENA': 0 }
-
-#             for tok in lexer:
-#                 if tok.type in reserved.values():
-#                     descripcion = "RESERVADA"
-#                     result_lexema.append((tok.lineno, tok.value, "X", "", "", "", "", "", "" ))
-#                 elif tok.type in delimitador.values():
-#                     descripcion = "DELIMITADOR"
-#                     result_lexema.append((tok.lineno, tok.value, "", "X", "", "", "", "", "" ))
-#                 elif tok.type in operador.values():
-#                     descripcion = "OPERADOR"
-#                     result_lexema.append((tok.lineno, tok.value, "", "", "X", "", "", "", "" ))
-#                 elif tok.type in signos.values():
-#                     descripcion = "SIGNO"
-#                     result_lexema.append((tok.lineno, tok.value, "", "", "", "X", "", "", "" ))
-#                 elif tok.type == 'VARIABLE':
-#                     descripcion = "VARIABLE"
-#                     result_lexema.append((tok.lineno, tok.value, "", "", "", "", "X", "", "" ))
-#                 elif tok.type == 'IDENTIFICADOR':
-#                     descripcion = "IDENTIFICADOR"
-#                     result_lexema.append((tok.lineno, tok.value, "", "", "", "", "", "X", "" ))
-#                 else:
-#                     descripcion = tok.type
-#                     result_lexema.append((tok.lineno, tok.value, "", "", "", "", "", "", "X" ))
-
-#                 token_count[descripcion] += 1
-
-#             result_lexema.append(("", "Total", *token_count.values()))
-            
-
-#             return render_template('index.html', code=code,  tokens=result_lexema, valor=1)
-    
-#         else:
-#             code = request.form.get('code')
-#             parser = yacc.yacc()
-
-#             try:
-#                 parser.parse(code)
-#                 if errores:
-#                     result = "Código no aceptado."
-#                 else:
-#                     result = "Código aceptado."
-#                     color = 1
-#             except Exception as e:
-#                 errores.append(str(e))
-#                 result = "Error al analizar el código."
-
-#             return render_template('index.html', code=code, errores=errores, color=color, resultado=result, valor=2)
-
-        
-#     return render_template('index.html', code=None, valor=0)

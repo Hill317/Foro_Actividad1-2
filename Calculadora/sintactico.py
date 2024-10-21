@@ -1,7 +1,6 @@
 import ply.yacc as yacc
 from lex import tokens, crear_lexer
 
-
 errores = []
 
 def p_inicio(p):
@@ -9,10 +8,11 @@ def p_inicio(p):
               | inicio RESTA medio
               | medio'''
     if len(p) == 4:  # Si la regla tiene una operación
+        # Crear un nodo con el operador y conectar los operandos como hijos
         if p[2] == '+':
-            p[0] = p[1] + p[3]  # Sumar
+            p[0] = p[1] + p[3]
         elif p[2] == '-':
-            p[0] = p[1] - p[3]  # Restar
+            p[0] = p[1] - p[3]
     else:
         p[0] = p[1]  # Pasar el valor de "medio"
 
@@ -21,10 +21,15 @@ def p_medio(p):
               | medio DIVI final
               | final'''
     if len(p) == 4:  # Si la regla tiene una operación
+        # Crear un nodo con el operador y conectar los operandos como hijos
         if p[2] == '*':
-            p[0] = p[1] * p[3]  # Multiplicar
+            p[0] = p[1] * p[3]
         elif p[2] == '/':
-            p[0] = p[1] / p[3]  # Dividir
+            if p[3] == 0:  # Verificar si el divisor es cero
+                errores.append("Error: División por cero")
+                p[0] = None  # O cualquier valor que decidas retornar en caso de error
+            else:
+                p[0] = p[1] / p[3]
     else:
         p[0] = p[1]  # Pasar el valor de "final"
 
@@ -49,17 +54,3 @@ def crear_parser():
     parser = yacc.yacc()
     return parser
 
-# lexer = crear_lexer()
-# parser = crear_parser()
-
-# while True:
-#    try:
-#        s = input('calc > ')
-#    except EOFError:
-#        break
-#    if not s: continue
-#    lexer.input(s)
-
-#    result = parser.parse(s, lexer=lexer)
-#    print(result)
-#    print(errores)

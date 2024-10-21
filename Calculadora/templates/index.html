@@ -10,7 +10,7 @@
     <div class="contenedor">
         <div class="calculadora">
             <form method="post">
-                <input type="text" id="code" name="code" value="{{ resultado if resultado else '' }}" readonly>
+                <input type="text" id="code" name="code" value="{{ resultado }}" readonly>
                 <div class="buttons">
                     <button type="button" onclick="appendToDisplay('(')">(</button>
                     <button type="button" onclick="appendToDisplay(')')">)</button>
@@ -31,10 +31,11 @@
                     <button type="button" onclick="appendToDisplay('0')">0</button>
                     <button type="button" onclick="appendToDisplay('.')">.</button>
                     <button type="submit" name="resultado" value="resultado">=</button>
-                    <button type="submit" class="extra" value="arbol">Tree</button>
+                    <form action="" method="post">
+                    <button type="submit" name="ir_arbol" value="true" class="extra">Tree</button>
+                    </form>
                 </div>
             </form>
-            </div>
         </div>
         <div class="tabla">
             {% if valor == 1 %}
@@ -43,6 +44,12 @@
                         <th>Token</th>
                         <th>Tipo</th>
                     </tr>
+                    {% for token, tipo in tokens %}
+                    <tr>
+                        <td>{{token}}</td>
+                        <td>{{tipo}}</td>
+                    </tr>
+                    {% endfor %}
                 </table>
             {% else %}
                 <p></p>

@@ -1,5 +1,5 @@
 from lex import crear_lexer
-from sintactico import crear_parser, errores
+from sintactico import crear_parser, errores, graficar_arbol
 
 lexer = crear_lexer()
 parser = crear_parser()

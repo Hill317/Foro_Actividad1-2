@@ -27,13 +27,13 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> inicio","S'",1,None,None,None),
-  ('inicio -> inicio SUMA medio','inicio',3,'p_inicio','sintactico.py',8),
-  ('inicio -> inicio RESTA medio','inicio',3,'p_inicio','sintactico.py',9),
-  ('inicio -> medio','inicio',1,'p_inicio','sintactico.py',10),
-  ('medio -> medio MULTI final','medio',3,'p_medio','sintactico.py',20),
-  ('medio -> medio DIVI final','medio',3,'p_medio','sintactico.py',21),
-  ('medio -> final','medio',1,'p_medio','sintactico.py',22),
-  ('final -> PABIERTO inicio PCERRADO','final',3,'p_final','sintactico.py',32),
-  ('final -> NUMERO','final',1,'p_final','sintactico.py',33),
-  ('final -> DECIMAL','final',1,'p_final','sintactico.py',34),
+  ('inicio -> inicio SUMA medio','inicio',3,'p_inicio','sintactico.py',19),
+  ('inicio -> inicio RESTA medio','inicio',3,'p_inicio','sintactico.py',20),
+  ('inicio -> medio','inicio',1,'p_inicio','sintactico.py',21),
+  ('medio -> medio MULTI final','medio',3,'p_medio','sintactico.py',35),
+  ('medio -> medio DIVI final','medio',3,'p_medio','sintactico.py',36),
+  ('medio -> final','medio',1,'p_medio','sintactico.py',37),
+  ('final -> PABIERTO inicio PCERRADO','final',3,'p_final','sintactico.py',55),
+  ('final -> NUMERO','final',1,'p_final','sintactico.py',56),
+  ('final -> DECIMAL','final',1,'p_final','sintactico.py',57),
 ]
